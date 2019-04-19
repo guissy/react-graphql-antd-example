@@ -1,0 +1,11 @@
+query gardenByCode($code: String!) {
+    gardenByCode(code: $code) {
+        id
+        name
+        code
+        city
+        cover
+        wechat
+        qcode
+    }
+}

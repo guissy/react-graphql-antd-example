@@ -1,0 +1,20 @@
+mutation adminLogin($email: String!, $password: String!) {
+    adminLogin(email: $email, password: $password) {
+        admin {
+            id
+            email
+            garden {
+                id
+                code
+                name
+            }
+        }
+        loginInfo {
+            token
+            expiration
+        }
+        authInfo {
+            moduleNames
+        }
+    }
+}

@@ -1,0 +1,12 @@
+overwrite: true
+schema: "http://127.0.0.1:4002/graphql"
+documents: "src/**/*.graphql"
+generates:
+  src/graphql/index.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+  src/graphql/fragments.tsx:
+    plugins:
+      - fragment-matcher
