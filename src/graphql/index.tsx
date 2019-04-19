@@ -3548,7 +3548,7 @@ export type SpriteIframeHashQuery = { __typename?: "Query" } & Pick<
 >;
 
 import gql from "graphql-tag";
-import * as React from "react";
+import React from "react";
 import * as ReactApollo from "react-apollo";
 
 export const AdminLoginDocument = gql`

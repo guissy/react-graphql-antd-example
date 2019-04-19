@@ -9,7 +9,7 @@
 import "cross-fetch/polyfill";
 
 // React for UI
-import * as React from "react";
+import React from "react";
 
 // The `Context` type for the Koa HTTP server
 import { Context } from "koa";

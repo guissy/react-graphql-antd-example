@@ -54,7 +54,11 @@ const routes: RouteProps[] = [
   // { path: '/', exact: true, redirect: '/dashboard/analysis', authority: ['admin', 'user'] } as any,
   {
     path: '/',
+    exact: true,
     component: BasicLayout,
+  },
+  {
+    component: _404,
   },
 ];
 

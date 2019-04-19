@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 // @ts-ignore
 import DocumentTitle from 'react-document-title';

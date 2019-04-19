@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { formatMessage } from '@/components/locale/FormattedMessage';
 // import { connect } from 'dva';
 import { Icon } from 'antd';

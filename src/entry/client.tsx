@@ -9,7 +9,7 @@
 import { createBrowserHistory } from "history";
 
 // React, our UI engine
-import * as React from "react";
+import React from "react";
 
 // HOC for enabling Apollo GraphQL `<Query>` and `<Mutation>`
 import { ApolloProvider } from "react-apollo";

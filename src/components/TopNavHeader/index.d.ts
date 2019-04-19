@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SiderTheme, CollapseType } from 'antd/es/Layout/Sider';
 import { MenuMode } from 'antd/es/menu';
 

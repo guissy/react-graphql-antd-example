@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SvgCanvas, Rect2D, SvgCanvas2DGradient } from 'red-agate-svg-canvas/modules';
 import * as ChartJs from 'chart.js';
 

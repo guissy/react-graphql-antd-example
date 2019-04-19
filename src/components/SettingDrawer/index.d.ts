@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SiderTheme } from 'antd/es/Layout/Sider';
 
 export interface SettingModelState {

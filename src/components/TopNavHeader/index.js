@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 // import RightContent from '../GlobalHeader/RightContent';
 import BaseMenu from '../SiderMenu/BaseMenu';
 import { getFlatMenuKeys } from '../SiderMenu/SiderMenuUtils';

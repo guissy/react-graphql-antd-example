@@ -5,7 +5,8 @@
     "allowUnusedLabels": true,
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+//    "declaration": true,
     "jsx": "react",
     "lib": ["dom", "es2015", "esnext"],
     "module": "commonjs",
@@ -20,7 +21,7 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es5"
   },
   "exclude": ["dist", "__tests__", "wallaby.js"]
 }

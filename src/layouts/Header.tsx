@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { formatMessage } from '@/components/locale/FormattedMessage';
 import { Layout, message } from 'antd';
 import Animate from 'rc-animate';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 export function FormattedMessage({id, defaultMessage}: any) {
   return <span>{defaultMessage || id}</span>

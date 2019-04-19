@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Layout, Icon } from 'antd';
 import GlobalFooter from '@/components/GlobalFooter';
 import { Fragment } from 'react';

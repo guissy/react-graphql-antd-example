@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, Col, Form, Icon, Input, Layout, Row } from 'antd';
 // import environment from '../../utils/environment';
 import { FormComponentProps, WrappedFormUtils } from 'antd/es/form/Form';
 import { AdminLoginComponent } from "@/graphql";
 import * as CryptoJS from 'crypto-js';
 import { WithStore, withStore } from '@/lib/store';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { withRouter as withRouterNext, WithRouterProps } from 'next/router';
+// import { withRouter, RouteComponentProps } from 'react-router';
+import './Login.less';
 
 interface State {
   email: string;
@@ -16,10 +19,11 @@ interface Props {
   height: string;
 }
 
+@(withRouterNext as any)
 @(withRouter as any)
 @(withStore as any)
 @(Form.create() as any)
-class Login extends React.PureComponent<RouteComponentProps & WithStore<Props> & FormComponentProps, State> {
+class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & WithStore<Props> & FormComponentProps, State> {
 
   state = {
     email: '',
@@ -56,7 +60,9 @@ class Login extends React.PureComponent<RouteComponentProps & WithStore<Props> &
                             this.props.store.signIn(result.data.adminLogin);
                             window.sessionStorage.setItem('token', result.data.adminLogin!.loginInfo!.token);
                           }
-                          this.props.history.push('/index');
+                          console.log('☞☞☞ 9527 Login 61', this.props);
+                          this.props.history!.push('/index');
+                          this.props.router!.push('/index');
                         }
                       });
                     }}
