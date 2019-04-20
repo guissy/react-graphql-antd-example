@@ -68,9 +68,9 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                     }}
                   >
                     <fieldset disabled={loading}>
-                      <h1>
+                      <h2>
                         后台管理系统
-                      </h1>
+                      </h2>
                       <Form.Item hasFeedback={true}>
                         {getFieldDecorator('email', {
                           initialValue: email,
@@ -107,7 +107,7 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                           />
                         )}
                       </Form.Item>
-                      <Form.Item>
+                      <Form.Item className="login-btn-wrap">
                         <Button type="primary" htmlType="submit" loading={loading}>
                           登录
                         </Button>
