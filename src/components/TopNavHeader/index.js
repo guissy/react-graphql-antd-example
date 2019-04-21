@@ -3,10 +3,11 @@ import React from 'react';
 import BaseMenu from '../SiderMenu/BaseMenu';
 import { getFlatMenuKeys } from '../SiderMenu/SiderMenuUtils';
 import styles from './index.less';
-import { title } from '../../defaultSettings';
 import {Link} from "react-router-dom";
 import RightContent from "../GlobalHeader/RightContent";
+import {withStore} from "../../lib/store";
 
+@(withStore)
 export default class TopNavHeader extends React.PureComponent {
   state = {
     maxWidth: undefined,
@@ -38,7 +39,7 @@ export default class TopNavHeader extends React.PureComponent {
             <div className={styles.logo} key="logo" id="logo">
               <Link to="/">
                 <img src={logo} alt="logo" />
-                <h1>{title}</h1>
+                <h1>{this.props.store.title}</h1>
               </Link>
             </div>
             <div

@@ -6,7 +6,8 @@ import { getMenuMatches } from './SiderMenuUtils';
 import { isUrl } from '@/utils/utils';
 import styles from './index.less';
 import IconFont from '@/components/IconFont';
-import {Link} from "react-router-dom";
+import Link from "next/link";
+// import {Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
 
@@ -52,7 +53,7 @@ export default class BaseMenu extends PureComponent {
   /**
    * get SubMenu or Item
    */
-  getSubMenuOrItem = item => {
+  getSubMenuOrItem = (item, i) => {
     // doc: add hideChildrenInMenu
     if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
       const { name } = item;
@@ -68,13 +69,13 @@ export default class BaseMenu extends PureComponent {
               name
             )
           }
-          key={item.path}
+          key={name+i}
         >
           {this.getNavMenuItems(item.children)}
         </SubMenu>
       );
     }
-    return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;
+    return <Menu.Item key={name+i}>{this.getMenuItemPath(item)}</Menu.Item>;
   };
 
   /**
@@ -99,19 +100,21 @@ export default class BaseMenu extends PureComponent {
     const { location, isMobile, onCollapse } = this.props;
     return (
       <Link
-        to={itemPath}
-        target={target}
+        href={itemPath}
+        // target={target}
         replace={itemPath === location.pathname}
-        onClick={
-          isMobile
-            ? () => {
-                onCollapse(true);
-              }
-            : undefined
-        }
+        // onClick={
+        //   isMobile
+        //     ? () => {
+        //         onCollapse(true);
+        //       }
+        //     : undefined
+        // }
       >
-        {icon}
-        <span>{name}</span>
+        <span>
+          {icon}
+          <span>{name}</span>
+        </span>
       </Link>
     );
   };

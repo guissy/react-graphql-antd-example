@@ -2,16 +2,16 @@ import React, {PureComponent} from 'react';
 import {Layout} from 'antd';
 import classNames from 'classnames';
 import styles from './index.less';
-import PageLoading from '../PageLoading';
 import {getDefaultCollapsedSubMenus} from './SiderMenuUtils';
-import {title} from '../../defaultSettings';
 import {Link} from "react-router-dom";
+import {withStore} from "../../lib/store";
 
 const BaseMenu = React.lazy(() => import('./BaseMenu'));
 const {Sider} = Layout;
 
 let firstMount = true;
 
+@(withStore)
 export default class SiderMenu extends PureComponent {
   constructor(props) {
     super(props);
@@ -73,14 +73,14 @@ export default class SiderMenu extends PureComponent {
             onCollapse(collapse);
           }
         }}
-        width={256}
+        width={180}
         theme={theme}
         className={siderClassName}
       >
         <div className={styles.logo} id="logo">
           <Link to="/">
             <img src={logo} alt="logo"/>
-            <h1>{title}</h1>
+            <h1>{this.props.store.title}</h1>
           </Link>
         </div>
         <BaseMenu
@@ -88,7 +88,7 @@ export default class SiderMenu extends PureComponent {
           mode="inline"
           handleOpenChange={this.handleOpenChange}
           onOpenChange={this.handleOpenChange}
-          style={{padding: '16px 0', width: '100%'}}
+          style={{padding: '0px 0', width: '100%'}}
           {...defaultProps}
         />
       </Sider>

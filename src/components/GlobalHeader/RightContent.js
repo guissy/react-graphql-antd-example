@@ -9,7 +9,7 @@ import HeaderDropdown from '../HeaderDropdown';
 import SelectLang from '../SelectLang';
 import styles from './index.less';
 
-export default class GlobalHeaderRight extends PureComponent {
+export default class RightContent extends PureComponent {
   getNoticeData() {
     const { notices = [] } = this.props;
     if (notices.length === 0) {
