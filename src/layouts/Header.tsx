@@ -8,17 +8,27 @@ import styles from './Header.less';
 import { Component } from 'react';
 import { withStore } from '@/lib/store';
 import { withRouter } from 'react-router';
+import { WithRouterProps } from 'next-server/router';
+import { StoreProps } from '@/data/store';
 
 const { Header } = Layout;
 
+interface Props {
+  handleMenuCollapse: (collapsed: boolean) => void;
+  autoHideHeader?: boolean;
+  isMobile?: boolean;
+  store: StoreProps;
+}
+
 @(withRouter as any)
-class HeaderView extends Component {
+@(withStore as any)
+class HeaderView extends Component<Props & WithRouterProps> {
   state = {
     visible: true,
   };
   oldScrollTop: number = 0;
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props: Props, state: any) {
     if (!props.autoHideHeader && !state.visible) {
       return {
         visible: true,
@@ -164,4 +174,4 @@ class HeaderView extends Component {
 //   notices: global.notices,
 //   setting,
 // })
-export default withStore(HeaderView);
+export default HeaderView;

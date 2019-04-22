@@ -15,8 +15,9 @@ import SiderMenu from '@/components/SiderMenu';
 import getPageTitle from '@/utils/getPageTitle';
 import styles from './BasicLayout.less';
 import { withStore } from '@/lib/store';
-import { withRouter } from 'react-router';
+import { withRouter, WithRouterProps } from 'next/router';
 import Abc from '@/pages/Dashboard/Abc';
+import { StoreProps } from '@/data/store';
 
 // lazy load SettingDrawer
 // @ts-ignore
@@ -50,16 +51,7 @@ const query = {
 };
 
 interface Props {
-  store: {
-    // fixedHeader: boolean;
-    // fixSiderbar: any;
-    isMobile: any;
-    collapsed: any;
-    layout: any;
-    route: any;
-    menu: any;
-    setting: any;
-  }
+  store: StoreProps,
   isMobile: boolean;
   location: any;
 }
@@ -69,22 +61,13 @@ interface State {
 }
 
 @(withRouter as any)
-class BasicLayout extends React.Component<Props, State> {
+class BasicLayout extends React.Component<Props & WithRouterProps, State> {
   componentDidMount() {
-    // const {
-    //   // dispatch,
-    //   route: { routes, path, authority },
-    // } = this.props;
-    // dispatch({
-    //   type: 'user/fetchCurrent',
-    // });
-    // dispatch({
-    //   type: 'setting/getSetting',
-    // });
-    // dispatch({
-    //   type: 'menu/getMenuData',
-    //   payload: { routes, path, authority },
-    // });
+    const { router, store } = this.props;
+    console.log('☞☞☞ 9527 BasicLayout 81', store.loginInfo.token);
+    if (!store.loginInfo.token) {
+      router!.push('/login/login');
+    }
   }
 
   getContext() {
@@ -106,8 +89,9 @@ class BasicLayout extends React.Component<Props, State> {
     return null;
   };
 
-  handleMenuCollapse = collapsed => {
+  handleMenuCollapse = (collapsed: boolean) => {
     console.log('☞☞☞ 9527 BasicLayout 100', collapsed);
+    this.props.store.setCollapsed(collapsed);
     // const { dispatch } = this.props;
     // dispatch({
     //   type: 'global/changeLayoutCollapsed',
@@ -128,12 +112,9 @@ class BasicLayout extends React.Component<Props, State> {
   };
 
   render() {
-    const {
-      children,
-      menu = {},
-    } = this.props.store;
-    const {isMobile} = this.props;
-    const {navTheme, fixedHeader, layout: PropsLayout} = this.props.store.setting;
+    const { menu = {}, } = this.props.store;
+    const { children, isMobile} = this.props;
+    const {collapsed, navTheme, fixedHeader, layout: PropsLayout} = this.props.store.setting;
     const {location: { pathname }} = this.props;
 
     const isTop = PropsLayout === 'topmenu';
@@ -147,6 +128,7 @@ class BasicLayout extends React.Component<Props, State> {
             onCollapse={this.handleMenuCollapse}
             menuData={menu.menuData}
             isMobile={isMobile}
+            collapsed={collapsed}
             {...this.props}
           />
         )}
@@ -157,14 +139,12 @@ class BasicLayout extends React.Component<Props, State> {
           }}
         >
           <Header
-            menuData={menu.menuData}
             handleMenuCollapse={this.handleMenuCollapse}
-            logo={logo}
             isMobile={isMobile}
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            {/*{children}*/}
+            {children}
             <Abc />
           </Content>
           <Footer />

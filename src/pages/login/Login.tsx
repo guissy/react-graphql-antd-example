@@ -59,6 +59,7 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                           if (result && result.data) {
                             this.props.store.signIn(result.data.adminLogin);
                             window.sessionStorage.setItem('token', result.data.adminLogin!.loginInfo!.token);
+                            window.sessionStorage.setItem('token', result.data.adminLogin!.loginInfo!.token);
                           }
                           console.log('☞☞☞ 9527 Login 61', this.props);
                           this.props.history!.push('/index');

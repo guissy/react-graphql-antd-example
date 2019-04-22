@@ -1,5 +1,6 @@
 import { action, observable, } from "mobx";
 import { Admin, AuthInfo, LoginInfo } from '@/graphql';
+import { SiderTheme } from 'antd/es/layout/Sider';
 
 export class Store {
   @observable count = 0;
@@ -12,7 +13,7 @@ export class Store {
     fixedHeader: true,
     fixSiderbar: true,
     collapsed: false,
-  } as any;
+  } as Setting;
   @observable title = '后台管理系统';
   @observable menu = {
     menuData: [
@@ -63,4 +64,20 @@ export class Store {
   @action public decrement = () => {
     --this.count;
   };
+  @action public setCollapsed = (collapsed: boolean) => {
+    this.setting.collapsed = collapsed;
+  };
+}
+
+
+export interface StoreProps extends Store {
+
+}
+
+interface Setting {
+  navTheme: SiderTheme,
+  layout: 'sidemenu' | 'topmenu',
+  fixedHeader: boolean,
+  fixSiderbar: boolean,
+  collapsed: boolean,
 }

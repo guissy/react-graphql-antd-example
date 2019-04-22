@@ -15,6 +15,16 @@ mutation adminLogin($email: String!, $password: String!) {
         }
         authInfo {
             moduleNames
+            routes {
+                name
+                icon
+                path
+                children {
+                    name
+                    icon
+                    path
+                }
+            }
         }
     }
 }

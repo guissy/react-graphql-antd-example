@@ -40,7 +40,7 @@ export default class BaseMenu extends PureComponent {
     }
     return menusData
       .filter(item => item.name && !item.hideInMenu)
-      .map(item => this.getSubMenuOrItem(item))
+      .map((item, i) => this.getSubMenuOrItem(item, i))
       .filter(item => item);
   };
 
@@ -69,13 +69,13 @@ export default class BaseMenu extends PureComponent {
               name
             )
           }
-          key={name+i}
+          key={i}
         >
           {this.getNavMenuItems(item.children)}
         </SubMenu>
       );
     }
-    return <Menu.Item key={name+i}>{this.getMenuItemPath(item)}</Menu.Item>;
+    return <Menu.Item key={i}>{this.getMenuItemPath(item)}</Menu.Item>;
   };
 
   /**

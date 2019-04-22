@@ -144,6 +144,7 @@ export type AppPageResult = {
 
 export type AuthInfo = {
   moduleNames: Array<Scalars["String"]>;
+  routes: Array<Route>;
 };
 
 export type Banner = {
@@ -3141,6 +3142,13 @@ export enum RoleVer {
   Dev = "dev"
 }
 
+export type Route = {
+  name?: Maybe<Scalars["String"]>;
+  path?: Maybe<Scalars["String"]>;
+  icon?: Maybe<Scalars["String"]>;
+  children?: Maybe<Array<Route>>;
+};
+
 export enum RunStatus {
   Padding = "padding",
   Running = "running",
@@ -3540,6 +3548,19 @@ export type AdminLoginMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type GardenByCodeQueryVariables = {
+  code: Scalars["String"];
+};
+
+export type GardenByCodeQuery = { __typename?: "Query" } & {
+  gardenByCode: Maybe<
+    { __typename?: "Garden" } & Pick<
+      Garden,
+      "id" | "name" | "code" | "city" | "cover" | "wechat" | "qcode"
+    >
+  >;
+};
+
 export type SpriteIframeHashQueryVariables = {};
 
 export type SpriteIframeHashQuery = { __typename?: "Query" } & Pick<
@@ -3548,7 +3569,7 @@ export type SpriteIframeHashQuery = { __typename?: "Query" } & Pick<
 >;
 
 import gql from "graphql-tag";
-import React from "react";
+import * as React from "react";
 import * as ReactApollo from "react-apollo";
 
 export const AdminLoginDocument = gql`
@@ -3612,6 +3633,53 @@ export function withAdminLogin<TProps, TChildProps = {}>(
     AdminLoginMutationVariables,
     AdminLoginProps<TChildProps>
   >(AdminLoginDocument, operationOptions);
+}
+export const GardenByCodeDocument = gql`
+  query gardenByCode($code: String!) {
+    gardenByCode(code: $code) {
+      id
+      name
+      code
+      city
+      cover
+      wechat
+      qcode
+    }
+  }
+`;
+
+export class GardenByCodeComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GardenByCodeQuery, GardenByCodeQueryVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GardenByCodeQuery, GardenByCodeQueryVariables>
+        query={GardenByCodeDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type GardenByCodeProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<GardenByCodeQuery, GardenByCodeQueryVariables>
+> &
+  TChildProps;
+export function withGardenByCode<TProps, TChildProps = {}>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GardenByCodeQuery,
+        GardenByCodeQueryVariables,
+        GardenByCodeProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    GardenByCodeQuery,
+    GardenByCodeQueryVariables,
+    GardenByCodeProps<TChildProps>
+  >(GardenByCodeDocument, operationOptions);
 }
 export const SpriteIframeHashDocument = gql`
   query spriteIframeHash {
