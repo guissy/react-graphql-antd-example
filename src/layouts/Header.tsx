@@ -1,11 +1,9 @@
-import React from 'react';
-import { formatMessage } from '@/components/locale/FormattedMessage';
-import { Layout, message } from 'antd';
+import React, { Component } from 'react';
+import { Layout } from 'antd';
+// @ts-ignore
 import Animate from 'rc-animate';
-import GlobalHeader from '@/components/GlobalHeader';
-import TopNavHeader from '@/components/TopNavHeader';
+import GlobalHeader from './GlobalHeader';
 import styles from './Header.less';
-import { Component } from 'react';
 import { withStore } from '@/lib/store';
 import { withRouter } from 'react-router';
 import { WithRouterProps } from 'next-server/router';
@@ -27,6 +25,7 @@ class HeaderView extends Component<Props & WithRouterProps> {
     visible: true,
   };
   oldScrollTop: number = 0;
+  ticking: boolean = false;
 
   static getDerivedStateFromProps(props: Props, state: any) {
     if (!props.autoHideHeader && !state.visible) {
@@ -54,12 +53,12 @@ class HeaderView extends Component<Props & WithRouterProps> {
     return collapsed ? 'calc(100% - 80px)' : 'calc(100% - 180px)';
   };
 
-  handleNoticeClear = type => {
-    message.success(
-      `${formatMessage({ id: 'component.noticeIcon.cleared' })} ${formatMessage({
-        id: `component.globalHeader.${type}`,
-      })}`
-    );
+  handleNoticeClear = (type: any) => {
+    // message.success(
+    //   `${formatMessage({ id: 'component.noticeIcon.cleared' })} ${formatMessage({
+    //     id: `component.globalHeader.${type}`,
+    //   })}`
+    // );
     // const { dispatch } = this.props;
     // dispatch({
     //   type: 'global/clearNotices',
@@ -130,32 +129,19 @@ class HeaderView extends Component<Props & WithRouterProps> {
     const { isMobile, handleMenuCollapse } = this.props;
     const { navTheme, layout, fixedHeader } = this.props.store.setting;
     const { visible } = this.state;
-    const isTop = layout === 'topmenu';
     const width = this.getHeadWidth();
     const HeaderDom = visible ? (
       <Header
         style={{ padding: 0, width, zIndex: 2 }}
         className={fixedHeader ? styles.fixedHeader : ''}
       >
-        {isTop && !isMobile ? (
-          <TopNavHeader
-            theme={navTheme}
-            mode="horizontal"
-            onCollapse={handleMenuCollapse}
-            onNoticeClear={this.handleNoticeClear}
-            onMenuClick={this.handleMenuClick}
-            onNoticeVisibleChange={this.handleNoticeVisibleChange}
-            {...this.props}
-          />
-        ) : (
-          <GlobalHeader
-            onCollapse={handleMenuCollapse}
-            onNoticeClear={this.handleNoticeClear}
-            onMenuClick={this.handleMenuClick}
-            onNoticeVisibleChange={this.handleNoticeVisibleChange}
-            {...this.props}
-          />
-        )}
+        <GlobalHeader
+          onCollapse={handleMenuCollapse}
+          onNoticeClear={this.handleNoticeClear}
+          onMenuClick={this.handleMenuClick}
+          onNoticeVisibleChange={this.handleNoticeVisibleChange}
+          {...this.props}
+        />
       </Header>
     ) : null;
     return (

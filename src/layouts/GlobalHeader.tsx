@@ -1,13 +1,21 @@
 import React, { PureComponent } from 'react';
 import { Icon } from 'antd';
 import Debounce from 'lodash-decorators/debounce';
-import styles from './index.less';
+import styles from './GlobalHeader.less';
 import RightContent from './RightContent';
 import {Link} from "react-router-dom";
 
-export default class GlobalHeader extends PureComponent {
+
+interface Props {
+  collapsed: boolean;
+  onCollapse: (b: boolean) => void;
+  isMobile: boolean;
+  logo: string;
+}
+
+export default class GlobalHeader extends PureComponent<Props> {
   componentWillUnmount() {
-    this.triggerResizeEvent.cancel();
+    (this.triggerResizeEvent as any).cancel();
   }
   /* eslint-disable*/
   @Debounce(600)

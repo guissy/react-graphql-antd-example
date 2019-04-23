@@ -7,17 +7,16 @@ import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import Media from 'react-media';
 import logo from '../assets/logo.svg';
-import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
 import SiderMenu from '@/components/SiderMenu';
 // @ts-ignore
 import getPageTitle from '@/utils/getPageTitle';
-import styles from './BasicLayout.less';
 import { withStore } from '@/lib/store';
 import { withRouter, WithRouterProps } from 'next/router';
 import Abc from '@/pages/Dashboard/Abc';
 import { StoreProps } from '@/data/store';
+import { css } from 'emotion';
 
 // lazy load SettingDrawer
 // @ts-ignore
@@ -108,14 +107,14 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
     ) {
       return null;
     }
-    return <SettingDrawer />;
+    return <SettingDrawer/>;
   };
 
   render() {
     const { menu = {}, } = this.props.store;
-    const { children, isMobile} = this.props;
-    const {collapsed, navTheme, fixedHeader, layout: PropsLayout} = this.props.store.setting;
-    const {location: { pathname }} = this.props;
+    const { children, isMobile } = this.props;
+    const { collapsed, navTheme, fixedHeader, layout: PropsLayout } = this.props.store.setting;
+    const { location: { pathname } } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -143,11 +142,15 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
             isMobile={isMobile}
             {...this.props}
           />
-          <Content className={styles.content} style={contentStyle}>
+          <Content
+            className={css`
+              margin: 24px;
+              padding-top: var(--layout-header-height);
+            `}
+            style={contentStyle}>
             {children}
-            <Abc />
+            <Abc/>
           </Content>
-          <Footer />
         </Layout>
       </Layout>
     );
@@ -177,6 +180,6 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
 // })
 export default withStore(((props: any) => (
   <Media query="(max-width: 599px)">
-    {isMobile => <BasicLayout {...props} isMobile={isMobile} />}
+    {isMobile => <BasicLayout {...props} isMobile={isMobile}/>}
   </Media>
 )))

@@ -21,10 +21,10 @@ export interface NoticeIconTabProps {
   style?: React.CSSProperties;
   title?: string;
   data?: any[];
-  onClick: (item: any) => void;
-  onClear: (item: any) => void;
-  locale: any;
-  onViewMore: (e: any) => void;
+  onClick?: (item: any) => void;
+  onClear?: (item: any) => void;
+  locale?: any;
+  onViewMore?: (e: any) => void;
 }
 
 export default class NoticeIconTab extends React.Component<NoticeIconTabProps, any> {}

@@ -19,9 +19,8 @@ const conf = withImages(withCss(withSass(withTypescript({
     LOCAL_STORAGE_KEY: 'reactql'
   },
   generateBuildId: () => {
-    return Math.random().toString(32).slice(2)
+    return dev ? 'development' : Math.random().toString(32).slice(2)
   },
-  // assetPrefix: './src/',
   cssModules: false,
   cssLoaderOptions: {
     importLoaders: 1,
@@ -30,9 +29,8 @@ const conf = withImages(withCss(withSass(withTypescript({
   lessLoaderOptions: {
     importLoaders: 1,
     javascriptEnabled: true,
-    // cssModules: true,
   },
-  pageExtensions: ['ts', 'tsx', 'js'],
+  pageExtensions: ['tsx', 'ts'],
   webpack: (config, options) => {
     // config.target = "web";
     // config.resolve.extensions.push('.less');
@@ -115,6 +113,4 @@ const conf = withImages(withCss(withSass(withTypescript({
   },
 }))));
 
-module.exports = (phase, {defaultConfig}) => {
-  return conf
-}
+module.exports = conf;

@@ -44,7 +44,10 @@ export class Store {
     authority: ['admin'],
   };
   @observable user = {
-    currentUser: {}
+    currentUser: {
+      unreadCount: 0,
+      avatar: 'http://i.pravatar.cc/64'
+    }
   };
   @observable loading = {
     fetchingMoreNotices: false,
