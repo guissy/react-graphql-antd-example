@@ -33,7 +33,7 @@ class MyApp extends App<{url: string}> {
               <div>
                 <Global styles={globalStyles}/>
                 <Helmet>
-                  <title>流动性比利润更重要！</title>
+                  <title>🌈🌈🌈🌸🌸🌸🌺🌺🌺🌹🌹🌹🌷🌷🌷🍇🍇🍇🍉🍉🍉💯💯💯✅✅✅❌❌❌⚠️⚠️⚠️</title>
                 </Helmet>
                 <ScrollTop>
                   <Switch>

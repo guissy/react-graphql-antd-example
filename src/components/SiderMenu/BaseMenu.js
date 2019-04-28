@@ -97,12 +97,12 @@ export default class BaseMenu extends PureComponent {
         </a>
       );
     }
-    const { location, isMobile, onCollapse } = this.props;
+    const { router, isMobile, onCollapse } = this.props;
     return (
       <Link
         href={itemPath}
         // target={target}
-        replace={itemPath === location.pathname}
+        replace={itemPath === router.pathname}
         // onClick={
         //   isMobile
         //     ? () => {
@@ -131,7 +131,7 @@ export default class BaseMenu extends PureComponent {
       openKeys,
       theme,
       mode,
-      location: { pathname },
+      router: { pathname },
       className,
       collapsed,
     } = this.props;

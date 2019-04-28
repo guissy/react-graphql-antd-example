@@ -19,10 +19,15 @@ import { getMainDefinition } from "apollo-utilities";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { setContext } from 'apollo-link-context';
 import fetch from 'node-fetch';
+import * as Process from 'process';
 /* Local */
 import { Store } from "@/data/store";
 import introspectionQueryResultData from "@/graphql/fragments";
+import gql from "graphql-tag";
 // ----------------------------------------------------------------------------
+declare const process: typeof Process & {
+  browser: boolean;
+}
 
 // Match up fragments
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -39,17 +44,27 @@ export function createClient(
   // responded to (on the server) or for the whole of the user's visit (in
   // the browser)
   const cache = new InMemoryCache({ fragmentMatcher });
+  const GET_TOKEN = gql`
+  {
+      token @client
+  }
+`;
 
   const authLink = setContext((_) => {
-    const headers = new Headers();
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+    const headers = new Map();
+    // const token = sessionStorage.getItem('token');
+    const tokenData = cache.extract() as any;
+    console.log('☞☞☞ 9527 hehe ', tokenData);
+    if (tokenData && tokenData.ROOT_QUERY && tokenData.ROOT_QUERY.token) {
+      console.log('☞☞☞ 9527 999', tokenData.ROOT_QUERY.token);
+      headers.set('Authorization', `Bearer ${tokenData.ROOT_QUERY.token}`);
     }
     headers.set('X-ProductCode', camelCase('adminWeb') + '@' + '1.0.0');
     headers.set('X-RoleVer', 'latest');
-    // console.log('☞☞☞ 9527 gql.controller 51', headers);
-    return { headers };
+    const headerObj = {
+      'Authorization': headers.get('Authorization')
+    };
+    return { headers: headerObj };
   });
 
   // Create a HTTP client (both server/client). It takes the GraphQL
@@ -58,7 +73,7 @@ export function createClient(
   const httpLink = new HttpLink({
     credentials: "same-origin",
     uri: GRAPHQL,
-    fetch: fetch,
+    fetch: fetch as any,
   });
 
   // If we're in the browser, we'd have received initial state from the
@@ -87,8 +102,12 @@ export function createClient(
           );
         }
         if (networkError) {
-          if (!(networkError instanceof TypeError)) {
+          if (!(networkError instanceof TypeError) && (networkError as any).result) {
             console.log((networkError as any).result.errors[0])
+          }
+          if (networkError && networkError.name ==='ServerError' && (networkError as any).statusCode === 401) {
+            // remove cached token on 401 from the server
+            sessionStorage.removeItem('token');
           }
           console.log(`[Network error]: ${networkError}`);
         }

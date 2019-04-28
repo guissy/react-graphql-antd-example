@@ -12,7 +12,7 @@ const {Sider} = Layout;
 let firstMount = true;
 
 @(withStore)
-export default class SiderMenu extends PureComponent {
+export default class SiderMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,9 +26,9 @@ export default class SiderMenu extends PureComponent {
 
   static getDerivedStateFromProps(props, state) {
     const {pathname, flatMenuKeysLen} = state;
-    if (props.location.pathname !== pathname || props.flatMenuKeys.length !== flatMenuKeysLen) {
+    if (props.router.pathname !== pathname || props.flatMenuKeys.length !== flatMenuKeysLen) {
       return {
-        pathname: props.location.pathname,
+        pathname: props.router.pathname,
         flatMenuKeysLen: props.flatMenuKeys.length,
         openKeys: getDefaultCollapsedSubMenus(props),
       };
@@ -74,6 +74,7 @@ export default class SiderMenu extends PureComponent {
           }
         }}
         width={180}
+        collapsedWidth={40}
         theme={theme}
         className={siderClassName}
       >

@@ -28,7 +28,7 @@ import Example from "@/pages/example/example";
 import Login from '@/pages/login/Login';
 import Index from "@/pages/main/Main";
 import BasicLayout from '@/layouts/BasicLayout';
-import Abc from '@/pages/Dashboard/Abc';
+import Abc from '@/pages/Dashboard2/Abc';
 
 // ----------------------------------------------------------------------------
 

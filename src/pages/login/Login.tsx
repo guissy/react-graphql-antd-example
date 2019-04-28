@@ -8,8 +8,9 @@ import { WithStore, withStore } from '@/lib/store';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { withRouter as withRouterNext, WithRouterProps } from 'next/router';
 // import { withRouter, RouteComponentProps } from 'react-router';
-import './Login.less';
-
+import { css } from 'emotion';
+import bg from '../../assets/bg.png';
+import { withApollo, WithApolloClient } from 'react-apollo';
 interface State {
   email: string;
   password: string;
@@ -23,7 +24,9 @@ interface Props {
 @(withRouter as any)
 @(withStore as any)
 @(Form.create() as any)
-class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & WithStore<Props> & FormComponentProps, State> {
+@(withApollo as any)
+class Login extends React.PureComponent<WithRouterProps & RouteComponentProps 
+& WithStore<Props> & WithApolloClient<Props> & FormComponentProps, State> {
 
   state = {
     email: '',
@@ -42,8 +45,17 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
     const { email, password } = this.state;
 
     return (
-      <div>
-        <Layout.Content>
+      <div className={css`
+        padding-top: 15vh;
+        height: 100vh;
+        background: url(${bg}) center center / cover no-repeat #fff;
+      `}>
+        <Layout.Content className={css`
+          background: #fff;
+          margin: 0 auto;
+          width: 340px;
+          border-radius: 10px;
+        `}>
           <Row type="flex" justify="space-around" align="middle" style={{ height: height }}>
             <Col className="col">
               <AdminLoginComponent>
@@ -57,9 +69,14 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                           const password = CryptoJS.SHA1(values.password).toString();
                           const result = await signIn({ variables: { email, password } });
                           if (result && result.data) {
+                            const token = result.data.adminLogin!.loginInfo!.token;
                             this.props.store.signIn(result.data.adminLogin);
-                            window.sessionStorage.setItem('token', result.data.adminLogin!.loginInfo!.token);
-                            window.sessionStorage.setItem('token', result.data.adminLogin!.loginInfo!.token);
+                            this.props.client.cache.writeData({
+                              data: {
+                                token: token || null,
+                              }
+                            });
+                            window.sessionStorage.setItem('token', token);
                           }
                           console.log('☞☞☞ 9527 Login 61', this.props);
                           this.props.history!.push('/index');
@@ -69,10 +86,15 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                     }}
                   >
                     <fieldset disabled={loading}>
-                      <h2>
+                      <h2 className={css`
+                        padding: 32px 0 16px;
+                        text-align: center;
+                      `}>
                         后台管理系统
                       </h2>
-                      <Form.Item hasFeedback={true}>
+                      <Form.Item hasFeedback={true} className={css`
+                        width: 300px;
+                      `}>
                         {getFieldDecorator('email', {
                           initialValue: email,
                           rules: [
@@ -108,7 +130,9 @@ class Login extends React.PureComponent<WithRouterProps & RouteComponentProps & 
                           />
                         )}
                       </Form.Item>
-                      <Form.Item className="login-btn-wrap">
+                      <Form.Item className={css`
+                        text-align: center;
+                      `}>
                         <Button type="primary" htmlType="submit" loading={loading}>
                           登录
                         </Button>

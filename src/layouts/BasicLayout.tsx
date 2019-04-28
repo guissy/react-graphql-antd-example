@@ -14,7 +14,7 @@ import SiderMenu from '@/components/SiderMenu';
 import getPageTitle from '@/utils/getPageTitle';
 import { withStore } from '@/lib/store';
 import { withRouter, WithRouterProps } from 'next/router';
-import Abc from '@/pages/Dashboard/Abc';
+// import Abc from '@/pages/Dashboard/Abc';
 import { StoreProps } from '@/data/store';
 import { css } from 'emotion';
 
@@ -60,6 +60,7 @@ interface State {
 }
 
 @(withRouter as any)
+@(withStore as any)
 class BasicLayout extends React.Component<Props & WithRouterProps, State> {
   componentDidMount() {
     const { router, store } = this.props;
@@ -82,7 +83,7 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
     const { fixSiderbar, layout, collapsed } = this.props.store.setting;
     if (fixSiderbar && layout !== 'topmenu' && !isMobile) {
       return {
-        paddingLeft: collapsed ? '80px' : '180px',
+        // paddingLeft: collapsed ? '80px' : '180px',
       };
     }
     return null;
@@ -114,8 +115,8 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
     const { menu = {}, } = this.props.store;
     const { children, isMobile } = this.props;
     const { collapsed, navTheme, fixedHeader, layout: PropsLayout } = this.props.store.setting;
-    const { location: { pathname } } = this.props;
-
+    // console.log(this.props.router);
+    const { pathname } = this.props.router!;
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
@@ -140,16 +141,16 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
           <Header
             handleMenuCollapse={this.handleMenuCollapse}
             isMobile={isMobile}
+            // collapsed={collapsed}
             {...this.props}
           />
           <Content
             className={css`
-              margin: 24px;
+              margin: 15px;
               padding-top: var(--layout-header-height);
             `}
             style={contentStyle}>
             {children}
-            <Abc/>
           </Content>
         </Layout>
       </Layout>
@@ -178,8 +179,8 @@ class BasicLayout extends React.Component<Props & WithRouterProps, State> {
 //   breadcrumbNameMap: menuModel.breadcrumbNameMap,
 //   ...setting,
 // })
-export default withStore(((props: any) => (
+export default ((props: any) => (
   <Media query="(max-width: 599px)">
     {isMobile => <BasicLayout {...props} isMobile={isMobile}/>}
   </Media>
-)))
+))

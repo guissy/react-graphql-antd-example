@@ -3543,9 +3543,72 @@ export type AdminLoginMutation = { __typename?: "Mutation" } & {
         LoginInfo,
         "token" | "expiration"
       >;
-      authInfo: { __typename?: "AuthInfo" } & Pick<AuthInfo, "moduleNames">;
+      authInfo: { __typename?: "AuthInfo" } & Pick<AuthInfo, "moduleNames"> & {
+          routes: Array<
+            { __typename?: "Route" } & Pick<Route, "name" | "icon" | "path"> & {
+                children: Maybe<
+                  Array<
+                    { __typename?: "Route" } & Pick<
+                      Route,
+                      "name" | "icon" | "path"
+                    >
+                  >
+                >;
+              }
+          >;
+        };
     }
   >;
+};
+
+export type DashboardQueryVariables = {};
+
+export type DashboardQuery = { __typename?: "Query" } & {
+  dashboard: { __typename?: "Dashboard" } & {
+    user: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    banner: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    screen: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    feedback: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total" | "todo">
+    >;
+    course: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    admin: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    issue: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    album: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    program: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    kid: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total" | "todo">
+    >;
+    device: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    garden: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total">
+    >;
+    training: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total" | "todo">
+    >;
+    homeworkRecord: Maybe<
+      { __typename?: "DashboardItem" } & Pick<DashboardItem, "total" | "todo">
+    >;
+    app: Maybe<{ __typename?: "DashboardItem" } & Pick<DashboardItem, "total">>;
+  };
 };
 
 export type GardenByCodeQueryVariables = {
@@ -3590,6 +3653,16 @@ export const AdminLoginDocument = gql`
       }
       authInfo {
         moduleNames
+        routes {
+          name
+          icon
+          path
+          children {
+            name
+            icon
+            path
+          }
+        }
       }
     }
   }
@@ -3633,6 +3706,95 @@ export function withAdminLogin<TProps, TChildProps = {}>(
     AdminLoginMutationVariables,
     AdminLoginProps<TChildProps>
   >(AdminLoginDocument, operationOptions);
+}
+export const DashboardDocument = gql`
+  query dashboard {
+    dashboard {
+      user {
+        total
+      }
+      banner {
+        total
+      }
+      screen {
+        total
+      }
+      feedback {
+        total
+        todo
+      }
+      course {
+        total
+      }
+      admin {
+        total
+      }
+      issue {
+        total
+      }
+      album {
+        total
+      }
+      program {
+        total
+      }
+      kid {
+        total
+        todo
+      }
+      device {
+        total
+      }
+      garden {
+        total
+      }
+      training {
+        total
+        todo
+      }
+      homeworkRecord {
+        total
+        todo
+      }
+      app {
+        total
+      }
+    }
+  }
+`;
+
+export class DashboardComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<DashboardQuery, DashboardQueryVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<DashboardQuery, DashboardQueryVariables>
+        query={DashboardDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type DashboardProps<TChildProps = {}> = Partial<
+  ReactApollo.DataProps<DashboardQuery, DashboardQueryVariables>
+> &
+  TChildProps;
+export function withDashboard<TProps, TChildProps = {}>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        DashboardQuery,
+        DashboardQueryVariables,
+        DashboardProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.withQuery<
+    TProps,
+    DashboardQuery,
+    DashboardQueryVariables,
+    DashboardProps<TChildProps>
+  >(DashboardDocument, operationOptions);
 }
 export const GardenByCodeDocument = gql`
   query gardenByCode($code: String!) {

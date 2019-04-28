@@ -1,0 +1,53 @@
+query dashboard {
+    dashboard {
+        user {
+            total
+        }
+        banner {
+            total
+        }
+        screen {
+            total
+        }
+        feedback {
+            total
+            todo
+        }
+        course {
+            total
+        }
+        admin {
+            total
+        }
+        issue {
+            total
+        }
+        album {
+            total
+        }
+        program {
+            total
+        }
+        kid {
+            total
+            todo
+        }
+        device {
+            total
+        }
+        garden {
+            total
+        }
+        training {
+            total
+            todo
+        }
+        homeworkRecord {
+            total
+            todo
+        }
+        app {
+            total
+        }
+    }
+}
